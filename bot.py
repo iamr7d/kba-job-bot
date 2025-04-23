@@ -60,8 +60,9 @@ async def handle_document(update: Update, context: ContextTypes.DEFAULT_TYPE):
         return
     with tempfile.NamedTemporaryFile(delete=False) as tf:
         file_path = tf.name
-        await doc.get_file().download_to_drive(file_path)
     try:
+        telegram_file = await context.bot.get_file(doc.file_id)
+        await telegram_file.download_to_drive(file_path)
         resume_text = extract_text_from_file(file_path, mime_type)
         if not resume_text.strip():
             await update.message.reply_text("Could not extract text from your resume. Please check the file.")
@@ -70,7 +71,8 @@ async def handle_document(update: Update, context: ContextTypes.DEFAULT_TYPE):
         await update.message.reply_text(f"Error reading file: {e}")
         return
     finally:
-        os.remove(file_path)
+        if os.path.exists(file_path):
+            os.remove(file_path)
     prompt = (
         f"You are a professional resume reviewer and job recommender.\n"
         f"Given the following resume, reply in this STRICT JSON format:\n"
