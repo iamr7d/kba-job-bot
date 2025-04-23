@@ -8,7 +8,8 @@ from utils.fallback_llm import openai_completion
 from utils.hf_similarity import compute_resume_job_score
 
 GEMINI_API_KEY = os.environ.get("GEMINI_API_KEY")
-gemini_client = genai.Client(api_key=GEMINI_API_KEY)
+genai.configure(api_key=GEMINI_API_KEY)
+# Use genai.GenerativeModel("gemini-pro") or genai.generate_text(...) as needed
 HEADERS = {'User-Agent': 'Mozilla/5.0'}
 ROLES = ["AI Engineer", "ML Engineer", "Data Scientist", "NLP Engineer", "Generative AI Engineer", "AI Research Intern", "Deep Learning Engineer", "Computer Vision Engineer", "AI Developer", "AI Researcher"]
 
