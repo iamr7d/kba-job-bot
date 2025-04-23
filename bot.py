@@ -11,8 +11,10 @@ from dotenv import load_dotenv
 # Load .env for local development
 load_dotenv()
 
-BOT_TOKEN = os.environ.get("BOT_TOKEN", "7709977067:AAHTpWIA_lxRcQJkyuovuFv57Eq3xLdaHmk")
-GEMINI_API_KEY = os.environ.get("GEMINI_API_KEY", "AIzaSyBX7vWcp12eIX9g8Sa2TE4yYK3imbi2gMM")
+# IMPORTANT: Set BOT_TOKEN in Railway environment variables after deployment
+BOT_TOKEN = os.environ.get("BOT_TOKEN")
+# IMPORTANT: Set GEMINI_API_KEY in Railway environment variables after deployment
+GEMINI_API_KEY = os.environ.get("GEMINI_API_KEY")
 WELCOME_MESSAGE = (
     "🚀 Hello R7D! Smart Job Bot is live!\n"
     "Send your resume as a PDF or DOCX file.\n"
@@ -82,7 +84,7 @@ async def handle_document(update: Update, context: ContextTypes.DEFAULT_TYPE):
         f"Now, for the following resume:\n{resume_text[:4000]}"
     )
     try:
-        response = model.generate_content(prompt)
+        response = model.generate_content(prompt, generation_config={"temperature": 0})
         result = response.text if hasattr(response, 'text') else str(response)
     except Exception as e:
         await update.message.reply_text(f"[Gemini API Error] {e}")
