@@ -129,9 +129,9 @@ def summarize(job, resume):
         else:
             return "[Sorry, all AI providers are busy. Please try again in a minute.]"
     try:
-        response = gemini_client.models.generate_content(
-            model="gemini-2.0-flash",
-            contents=p,
+        model = genai.GenerativeModel("gemini-2.0-flash")
+        response = model.generate_content(
+            contents=p
         )
         return response.text.strip()
     except Exception as e:
