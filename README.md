@@ -10,28 +10,53 @@ An AI-powered Telegram bot for personalized job search, resume review, and analy
 - **Admin Tools**: `/stats`, `/broadcast`, `/export_analytics` for user stats, mass messaging, and analytics export.
 - **Analytics**: Tracks feature usage and job saves for export.
 
-## 🚀 Setup & Deployment
-1. **Clone this repo to Railway.**
+## 🚀 Railway Deployment
+1. **Deploy to [Railway](https://railway.app/):**
+   - Create a new Railway project and link this repo.
 2. **Set environment variables in Railway dashboard:**
    - `BOT_TOKEN` (Telegram Bot Token)
    - `GEMINI_API_KEY` (Google Gemini API Key)
    - `ADMIN_ID` (Your Telegram user ID)
    - *(Optional)* `ALERT_CHAT_ID`, `USER_RESUME`, `ANALYTICS_FILE`
-3. **Railway will auto-detect `bot.py` as the entry point.**
+   - **Do NOT use a `.env` file in production. Use Railway's Variables tab.**
+3. **Entry point:**
+   - Railway will auto-detect `bot.py` as the entry point.
    - Or set the start command to:
-     ```
+     ```sh
      python bot.py
      ```
 
-## 🧪 Local Testing
-Install dependencies:
-```
-pip install -r requirements.txt
-```
-Run the bot:
-```
-python bot.py
-```
+## 🧪 Local Development
+1. Install dependencies:
+   ```sh
+   pip install -r requirements.txt
+   ```
+2. (Optional) Create a `.env` file for local testing:
+   ```env
+   BOT_TOKEN=your-telegram-bot-token
+   GEMINI_API_KEY=your-gemini-api-key
+   ADMIN_ID=your-telegram-user-id
+   # ...other vars
+   ```
+3. Run the bot locally:
+   ```sh
+   python bot.py
+   ```
+
+## 🛠️ Troubleshooting
+- **Gemini errors:** Make sure you are using `genai.configure(api_key=...)` and not `genai.Client`.
+- **Multiple bot instances:** Only run one instance at a time to avoid Telegram 'Conflict' errors.
+- **Missing packages:** All dependencies are listed in `requirements.txt`. If Railway build fails, check logs for missing packages and update `requirements.txt` as needed.
+- **Environment variables:** All secrets must be set in Railway's Variables tab, not in code or `.env` in production.
+
+## 📦 Features & Dependencies
+- Job scraping: `python-jobspy`, `beautifulsoup4`, `requests`, `pandas`
+- Resume parsing: `pdfplumber`, `python-docx`
+- Gemini AI: `google-generativeai`
+- Analytics: `plotly`, `pandas`
+- Semantic job matching: `sentence-transformers`, `scikit-learn`
+- Telegram bot: `python-telegram-bot`
+- See `requirements.txt` for full list.
 
 ## 🛠️ Admin & Analytics Commands
 - `/stats` — Show user and feedback stats
