@@ -3,7 +3,7 @@ from telegram import Update, Document
 from telegram.ext import ContextTypes
 from utils.file_extract import extract_text_from_file
 from utils.user_data import load_user_data, save_user_data
-from google import genai
+import google.generativeai as genai
 import os
 
 GEMINI_API_KEY = os.environ.get("GEMINI_API_KEY")
