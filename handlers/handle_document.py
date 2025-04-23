@@ -7,7 +7,11 @@ import google.generativeai as genai
 import os
 
 GEMINI_API_KEY = os.environ.get("GEMINI_API_KEY")
-client = genai.Client(api_key=GEMINI_API_KEY)
+genai.configure(api_key=GEMINI_API_KEY)
+# Example usage:
+# model = genai.GenerativeModel("gemini-pro")
+# response = model.generate_content("Explain how AI works in a few words.")
+# print(response.text)
 
 async def handle_document(update: Update, context: ContextTypes.DEFAULT_TYPE):
     doc: Document = update.message.document
