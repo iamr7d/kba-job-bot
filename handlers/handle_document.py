@@ -41,7 +41,6 @@ async def handle_document(update: Update, context: ContextTypes.DEFAULT_TYPE):
         print("Gemini review prompt:", repr(review_prompt))
         model = genai.GenerativeModel("gemini-2.0-flash")
         response = model.generate_content(
-            model="gemini-2.0-flash",
             contents=review_prompt
         )
         import ast, re
@@ -93,7 +92,6 @@ async def handle_document(update: Update, context: ContextTypes.DEFAULT_TYPE):
     try:
         kw_model = genai.GenerativeModel("gemini-2.0-flash")
         kw_response = kw_model.generate_content(
-            model="gemini-2.0-flash",
             contents=kw_prompt
         )
         import ast
