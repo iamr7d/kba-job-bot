@@ -9,6 +9,7 @@ venv/
 
 # Environment variables
 .env
+user_data.json
 
 # Railway config (optional to ignore)
 # railway.json
