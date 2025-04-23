@@ -106,9 +106,12 @@ async def handle_document(update: Update, context: ContextTypes.DEFAULT_TYPE):
             jobs = re.findall(r"[A-Za-z ]+", str(jobs))
             jobs = [j.strip() for j in jobs if len(j.strip()) > 3][:3]
         formatted = (
-            f"<b>Rating:</b> {rating}/100\n"
-            f"<b>Improve:</b> {improvement}\n"
-            f"<b>Jobs:</b> {', '.join(jobs)}"
+            f"🚀 <b>Your Resume Review</b>\n\n"
+            f"<b>⭐ Score:</b> {rating}/100\n\n"
+            f"<b>🔍 Expert Tip:</b> {improvement}\n\n"
+            f"<b>🎯 Top Career Matches:</b>\n"
+            + "\n".join([f"• {job}" for job in jobs]) + "\n\n"
+            f"<i>Keep pushing forward—your next big opportunity awaits!</i>"
         )
         await update.message.reply_text(formatted, parse_mode='HTML')
     except Exception:
