@@ -2,7 +2,7 @@ import os, requests, asyncio
 from telegram import Update, InlineKeyboardButton, InlineKeyboardMarkup
 from telegram.ext import ContextTypes, CallbackQueryHandler
 from bs4 import BeautifulSoup
-from google import genai
+import google.generativeai as genai
 from utils.rate_limiter import gemini_rate_limiter
 from utils.fallback_llm import openai_completion
 from utils.hf_similarity import compute_resume_job_score
