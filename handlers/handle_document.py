@@ -9,7 +9,7 @@ import os
 GEMINI_API_KEY = os.environ.get("GEMINI_API_KEY")
 genai.configure(api_key=GEMINI_API_KEY)
 # Example usage:
-# model = genai.GenerativeModel("gemini-pro")
+# model = genai.GenerativeModel("gemini-2.0-flash")
 # response = model.generate_content("Explain how AI works in a few words.")
 # print(response.text)
 
@@ -39,7 +39,8 @@ async def handle_document(update: Update, context: ContextTypes.DEFAULT_TYPE):
     review_prompt = f"Review this resume and provide a score (0-100), a short expert tip, and top 3 career matches as a Python dict: {sanitized_resume}\nReply ONLY with a Python dict."
     try:
         print("Gemini review prompt:", repr(review_prompt))
-        response = client.models.generate_content(
+        model = genai.GenerativeModel("gemini-2.0-flash")
+        response = model.generate_content(
             model="gemini-2.0-flash",
             contents=review_prompt
         )
@@ -90,7 +91,8 @@ async def handle_document(update: Update, context: ContextTypes.DEFAULT_TYPE):
     # Also extract and store keywords using Gemini
     kw_prompt = f"Extract the top 5 most relevant keywords (skills, tech, domains) from this resume as a Python list: {resume_text[:4000]}\nReply ONLY with a Python list of keywords."
     try:
-        kw_response = client.models.generate_content(
+        kw_model = genai.GenerativeModel("gemini-2.0-flash")
+        kw_response = kw_model.generate_content(
             model="gemini-2.0-flash",
             contents=kw_prompt
         )

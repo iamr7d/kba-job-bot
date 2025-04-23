@@ -146,10 +146,11 @@ async def handle_document(update: Update, context: ContextTypes.DEFAULT_TYPE):
         f"Now, for the following resume:\n{resume_text[:4000]}"
     )
     try:
-        response = client.models.generate_content(
-            model="gemini-2.0-flash",
-            contents=prompt
-        )
+        model = genai.GenerativeModel("gemini-2.0-flash")
+response = model.generate_content(
+    model="gemini-2.0-flash",
+    contents=prompt
+)
         result = response.text if hasattr(response, 'text') else str(response)
     except Exception as e:
         await update.message.reply_text(f"[Gemini API Error] {e}")
@@ -178,12 +179,13 @@ async def handle_document(update: Update, context: ContextTypes.DEFAULT_TYPE):
         # Also extract and store keywords using Gemini
         kw_prompt = f"Extract the top 5 most relevant keywords (skills, tech, domains) from this resume as a Python list: {resume_text[:4000]}\nReply ONLY with a Python list of keywords."
         try:
-            kw_response = client.models.generate_content(
-                model="gemini-2.0-flash",
-                contents=kw_prompt
-            )
-            import ast
-            keywords = ast.literal_eval(kw_response.text if hasattr(kw_response, 'text') else str(kw_response))
+            kw_model = genai.GenerativeModel("gemini-2.0-flash")
+kw_response = kw_model.generate_content(
+    model="gemini-2.0-flash",
+    contents=kw_prompt
+)
+import ast
+keywords = ast.literal_eval(kw_response.text if hasattr(kw_response, 'text') else str(kw_response))
             if isinstance(keywords, list):
                 context.user_data['gemini_keywords'] = [str(k) for k in keywords]
             else:
